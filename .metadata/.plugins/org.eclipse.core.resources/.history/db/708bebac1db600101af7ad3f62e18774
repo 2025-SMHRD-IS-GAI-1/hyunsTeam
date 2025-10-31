@@ -1,0 +1,5 @@
+package com.supphoto.model;
+
+public class UserDAO {
+
+}

@@ -1,0 +1,5 @@
+package com.supphoto.db;
+
+public class MySqlSessionManager {
+
+}

@@ -1,0 +1,9 @@
+package com.supphoto.model;
+
+import org.apache.ibatis.session.SqlSessionFactory;
+
+import com.supphoto.db.MySqlSessionManager;
+
+public class UserDAO {
+	private SqlSessionFactory factory = MySqlSessionManager.getFactory();
+}

@@ -1,0 +1,5 @@
+package com.supphoto.frontcontroller;
+
+public interface Service {
+
+}
