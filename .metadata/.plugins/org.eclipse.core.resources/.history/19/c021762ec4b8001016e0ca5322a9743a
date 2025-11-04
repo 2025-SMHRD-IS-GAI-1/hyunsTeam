@@ -1,0 +1,280 @@
+/*
+ * ------------------------------------------------------------------
+ * SUPPHOTO 로그인 페이지 CSS 스타일 (styles.css)
+ * ------------------------------------------------------------------
+ * 목적: 모던하고 반응형인 로그인 페이지 레이아웃 및 스타일 정의
+ *
+ * 목차:
+ * 1. BASE STYLES (기본 설정)
+ * 2. LOGO & HEADER (로고 및 슬로건)
+ * 3. FORM INPUTS (폼 입력 필드)
+ * 4. PASSWORD FIELD (비밀번호 특수 그룹)
+ * 5. ACTION BUTTONS (로그인 버튼)
+ * 6. FOOTER LINKS (하단 링크 영역)
+ * 7. SOCIAL ICONS (소셜 로그인 버튼)
+ * 8. RESPONSIVE DESIGN (반응형 설정)
+ * ------------------------------------------------------------------
+ */
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* 1. BASE STYLES (기본 설정) */
+body {
+    /* 기본 폰트 설정 (Mac/Win/Linux 호환 산세리프) */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    background-color: #fff;
+    color: #000;
+    
+    /* 화면 중앙 정렬을 위한 Flexbox 설정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* 화면 높이만큼 채움 */
+    margin: 0;
+}
+
+/* 로그인 컨테이너 - 콘텐츠 너비 및 중앙 배치 */
+.login-container {
+    width: 320px; 
+    text-align: center;
+}
+
+/* 폼 그룹 스타일 (아이디/비밀번호 섹션) */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+/* 2. LOGO & HEADER (로고 및 슬로건) */
+.logo h1 {
+    font-size: 32px;
+    font-weight: 750;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+}
+
+/* 슬로건 텍스트 */
+.logo p {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.5;
+}
+.logo p:first-of-type {
+    margin-bottom: 0;;
+}
+.logo p:last-of-type {
+    margin-bottom: 50px;
+}
+
+/* 3. FORM INPUTS (폼 입력 필드) */
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* 아이디, 비밀번호 공통 입력 필드 스타일 */
+.input-group input[type="text"],
+.input-group input[type="password"] {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid #ccc; /* 하단 줄 */
+    outline: none; /* 포커스 시 브라우저 기본 외곽선 제거 */
+    font-size: 12px;
+    box-sizing: border-box; /* 패딩/보더를 너비에 포함하여 계산 */
+}
+
+/* 4. PASSWORD FIELD (비밀번호 특수 그룹) */
+
+/* 비밀번호 필드와 버튼을 감싸는 래퍼 */
+.password-group .password-input-wrapper {
+    display: flex; /* 가로 정렬 */
+    align-items: flex-end; /* 아래쪽 기준 정렬 */
+    border-bottom: 1px solid #ccc; /* 하단 줄을 래퍼에 적용 */
+    padding-bottom: 2px;
+}
+
+/* 비밀번호 입력 필드 (버튼과의 정렬을 위해 재정의) */
+.password-group input {
+    flex-grow: 1; /* 남은 공간을 모두 차지하도록 늘어남 */
+    border-bottom: none !important; /* input 자체의 하단 줄 제거 (최우선 순위) */
+    padding-bottom: 8px !important; /* 아래쪽 패딩 강제 적용 (버튼과의 간격 조정) */
+}
+
+/* 비밀번호 표시 버튼 */
+.show-password-btn {
+    background: none;
+    border: 1px solid #ccc;
+    color: #666;
+    padding: 4px 8px;
+    font-size: 10px;
+    cursor: pointer; /* 클릭 가능한 손가락 모양 커서 */
+    border-radius: 4px;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+/* 5. ACTION BUTTONS (로그인 버튼) */
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #666; 
+    color: #fff;
+    border: none;
+    border-radius: 40px; /* 원형에 가까운 둥근 모서리 */
+    font-size: 16px;
+    font-weight: 550;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    transition: background-color 0.2s; /* 배경색 변화를 0.2초 동안 부드럽게 */
+}
+
+/* 로그인 버튼: 마우스 올렸을 때 */
+.login-btn:hover {
+    background-color: #3f3f3f; /* 더 어두운 색으로 변경 */
+}
+
+/* 6. FOOTER LINKS (하단 링크 영역) */
+.link-footer {
+    font-size: 12px;
+    margin-bottom: 80px;
+}
+
+/* 하단 링크 (아이디 찾기 등) */
+.link-footer a {
+    color: #000;
+    text-decoration: none; /* 기본 밑줄 제거 */
+    margin: 0 5px; /* 좌우 간격 */
+}
+
+/* 하단 링크: 마우스 올렸을 때 */
+.link-footer a:hover {
+    text-decoration: underline; /* 마우스를 올렸을 때 밑줄 다시 생성 */
+}
+
+/* 링크 사이의 구분선 (|) */
+.link-footer span {
+    color: #ccc;
+    font-size: 10px;
+}
+
+/* 7. SOCIAL ICONS (소셜 로그인 버튼) */
+.social-login {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* 아이콘 간 간격 */
+    margin-top: -30px;
+}
+
+.social-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%; /* 원형 */
+    font-size: 24px;
+    cursor: pointer;
+    
+    /* 아이콘을 버튼 중앙에 배치 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Hover 오버레이를 위한 설정 */
+    position: relative; 
+    overflow: hidden; 
+    transition: all 0.2s ease-in-out; /* 전체적인 부드러운 전환 */
+    padding: 0;
+}
+
+/* --- 7.1. Brand Overrides (브랜드별 스타일) --- */
+
+/* Google (Font Awesome 기본 사용 기준) */
+.social-icon.google {
+    background-color: #fff;
+    border: 1px solid #ccc; 
+    color: #4285f4; /* 구글 공식 색상 */
+}
+
+/* Kakao (Font Awesome 사용) */
+.social-icon.kakao {
+    background-color: #fae100;
+    border: none;
+    color: #000;
+}
+
+/* Apple */
+.social-icon.apple {
+    background-color: #000;
+    color: #fff;
+    border: none;
+}
+
+/* --- 7.2. Image Overrides --- */
+.social-img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain; 
+    display: block;
+}
+
+
+/* --- 7.3. Hover Overlay Effect (마우스 오버레이 효과) --- */
+.social-icon::before {
+    content: ''; 
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    /* 초기 상태: 완전히 투명한 회색 */
+    background-color: rgba(128, 128, 128, 0); 
+    transition: background-color 0.2s ease-in-out; /* 투명도 변화에 전환 효과 적용 */
+    pointer-events: none; /* 오버레이가 클릭 이벤트를 막지 않도록 함 */
+}
+
+.social-icon:hover::before {
+    /* 마우스 올렸을 때: 20% 불투명한 회색 오버레이 */
+    background-color: rgba(128, 128, 128, 0.2); 
+}
+
+/* 8. RESPONSIVE DESIGN (반응형 설정) */
+@media (max-width: 400px) {
+    /* 작은 화면(모바일)에서는 컨테이너의 너비 조정 */
+    .login-container {
+        width: 100%;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+
+    /* 폰트 크기 조정 */
+    .logo h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .logo p {
+        font-size: 14px;
+        margin-bottom: 40px;
+    }
+
+    /* 소셜 로그인 버튼 간격 조정 */
+    .social-login {
+        gap: 15px;
+    }
+
+    /* 소셜 아이콘 크기 약간 축소 */
+    .social-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+    }
+}
