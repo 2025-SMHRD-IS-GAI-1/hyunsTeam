@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supphoto.model.UserDAO">
+  <select id="login" resultType="com.supphoto.model.UserVO">
+    	SELECT USER_ID,NAME,PHONE_NUMBER,FIRST_JOIN FROM TB_USER WHERE USER_ID=#{user_id}
+  </select>
+  <select id="checkId" resultType="com.supphoto.model.UserVO">
+    	SELECT USER_ID FROM TB_USER WHERE USER_ID=#{user_id}
+  </select>
+  <insert id="socialJoin" parameterType="com.supphoto.model.UserVO">
+  		INSERT INTO TB_USER(USER_ID,NAME,PHONE_NUMBER,SOCIAL_TYPE) VALUES(#{user_id},#{name},#{phone_number},#{social_type})
+  </insert>
+  <insert id="localJoin" parameterType="com.supphoto.model.UserVO">
+  		INSERT INTO TB_USER(USER_ID,PASSWORD_HASH,NAME,PHONE_NUMBER) VALUES(#{user_id},#{password_hash},#{name},#{phone_number})
+  </insert>
+</mapper>

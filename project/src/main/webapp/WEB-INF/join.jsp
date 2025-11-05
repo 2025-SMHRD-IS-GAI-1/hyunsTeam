@@ -74,17 +74,11 @@
         </header>
 
         <section class="join-form">
-            <form action="#">
-
-                <!-- <div class="input-group">
-                    <label for="user-id"><i class="fas fa-user"></i> 아이디</label>
-                    <input type="text" id="user-id" placeholder="아이디를 입력해 주세요." required>
-                </div> -->
-
+            <form action="Join.do">
                 <div class="input-group email-group">
-                    <label for="email"><i class="fas fa-envelope"></i> 아이디</label>
-                    <div class="email-input-wrap">
-                        <input type="email" id="id" name="id" placeholder="아이디를 입력해 주세요." required>
+                    <label for="id"><i class="fas fa-envelope"></i> 아이디</label>
+                    <div class="id-input-wrap">
+                        <input type="text" id="id" name="id" placeholder="아이디를 입력해 주세요." required>
                         <button type="button" class="check-id-btn" style="opacity:0.5;">중복확인</button>
                     </div>
                     <p class=id-message style="font-size:12px;"></p>
@@ -120,13 +114,13 @@
                         <span class="timer" id="timer-display">05:00</span>
                         <button type="button" class="verify-code-btn" disabled>확인</button>
                     </div>
+                    <p id="verify-Message" style="color:red; font-size:12px;"></p>
                 </div>
+                <button type="submit" class="submit-btn" disabled>회원가입</button>
             </form>
         </section>
 
-        <footer class="join-submit">
-            <button type="submit" class="submit-btn" disabled>회원가입</button>
-        </footer>
+            
     </div>
     </div>
     </div>

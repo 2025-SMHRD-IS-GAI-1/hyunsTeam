@@ -335,7 +335,7 @@ body {
 
 
 /* 이메일/휴대폰/인증번호 그룹 공통 스타일 (하단 줄이 버튼까지 이어지도록) */
-.email-group .email-input-wrap,
+.email-group .id-input-wrap,
 .phone-group .phone-input-wrap,
 .verification-code-group .code-input-wrap {
     display: flex;
@@ -346,11 +346,18 @@ body {
 }
 
 /* 포커스 시 하단 줄 진해지는 효과 (이메일, 휴대폰, 인증번호) */
-.email-group:focus-within .email-input-wrap,
+.email-group:focus-within .id-input-wrap,
 .phone-group:focus-within .phone-input-wrap,
 .verification-code-group:focus-within .code-input-wrap
  {
     border-bottom-color: #000;
+}
+
+#phone-number:disabled {
+	background-color: #eee;
+    color: #999;
+    border: 1px solid #ccc;
+    cursor: not-allowed;
 }
 
 

@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>메인페이지임</title>
+<title>서포토</title>
 </head>
 <body>
-	<h2>메인페이지임</h2>
-	<c:if test="${loginInfo nq null}">
-		<p>${loginInfo.name}</p>
+	<c:if test="${loginUser ne null}">
+		<p>${loginUser.name}&nbsp;&nbsp; <a href="Logout.do" style="cursor:poinger; text-decoration:none;">로그아웃</a></p>
 	</c:if>
+	<h2>메인페이지임</h2>
 </body>
 </html>

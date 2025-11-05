@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 비밀번호 입력 필드와 버튼 요소를 찾습니다.
     const passwordField = document.getElementById('password');
     const showPasswordBtn = document.querySelector('.show-password-btn');
+	const loginBtn = document.querySelector('.login-btn');
+	const id = document.getElementById('username');
+	const loginErr = document.getElementById('loginErr');
 
     if (passwordField && showPasswordBtn) {
         showPasswordBtn.addEventListener('click', () => {
@@ -19,4 +22,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+	
+	loginBtn.addEventListener('click',()=>{
+		fetch('Login.do',{
+			method:"POST",
+			headers : {"Content-Type":"application/x-www-form-urlencoded"},
+			body : new URLSearchParams({
+				id : id.value,
+				pw : passwordField.value
+			})
+		})
+		.then(res=>res.json())
+		.then(result=>{
+			if(result == "success"){
+				window.location.href = "Gomain.do";
+			}else{
+				id.focus();
+				loginErr.style.display = "block";
+				
+			}
+		})
+	})
+	
+	id.addEventListener('input',()=>{
+		loginErr.style.display = "none";
+	})
+	passwordField.addEventListener('input',()=>{
+			loginErr.style.display = "none";
+		})
 });

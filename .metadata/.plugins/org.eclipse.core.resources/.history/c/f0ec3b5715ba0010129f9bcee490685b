@@ -1,0 +1,45 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // 비밀번호 입력 필드와 버튼 요소를 찾습니다.
+    const passwordField = document.getElementById('password');
+    const showPasswordBtn = document.querySelector('.show-password-btn');
+	const loginBtn = document.querySelector('.login-btn');
+	const id = document.getElementById('username');
+	const loginErr = document.getElementById('loginErr');
+
+    if (passwordField && showPasswordBtn) {
+        showPasswordBtn.addEventListener('click', () => {
+            // 현재 입력 필드의 'type' 속성을 확인
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+
+            // 'type' 속성을 변경합니다.
+            passwordField.setAttribute('type', type);
+
+            // 버튼의 텍스트를 토글하여 현재 상태를 표시
+            if (type === 'text') {
+                showPasswordBtn.textContent = '비밀번호 숨기기';
+            } else {
+                showPasswordBtn.textContent = '비밀번호 표시';
+            }
+        });
+    }
+	
+	loginBtn.addEventListener('click',()=>{
+		fetch('Login.do',{
+			method:"POST",
+			headers : {"Content-Type":"application/x-www-form-urlencoded"},
+			body : new URLSearchParams({
+				id : id.value,
+				pw : passwordField.value
+			})
+		})
+		.then(res=>res.json())
+		.then(result=>{
+			if(result == "success"){
+				window.location.href = "Gomain.do";
+			}else{
+				id.focus();
+				
+			}
+		})
+	})
+});

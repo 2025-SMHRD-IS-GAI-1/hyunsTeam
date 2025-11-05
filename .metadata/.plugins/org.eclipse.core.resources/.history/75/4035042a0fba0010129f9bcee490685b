@@ -1,0 +1,475 @@
+/*
+ * ------------------------------------------------------------------
+ * SUPPHOTO 회원가입 약관 페이지 CSS 스타일 (joinStyle1.css)
+ * ------------------------------------------------------------------
+ */
+
+/* 1. BASE STYLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    background-color: #fff;
+    color: #000;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.join-box {
+    display: flex;
+    overflow: hidden;
+    width: 380px;
+}
+
+.join-wrap{
+    display: flex;
+    transition: .2s ease;
+}
+
+.join-img{
+    height: 120px;
+}
+
+/* 메인 컨테이너 */
+.join-container {
+    width: 380px;
+    padding: 20px 20px; 
+    height: 750px;
+    text-align: center;
+    position: relative; /* 헤더 위치 조정을 위해 필요 */
+}
+
+/* 1. 페이지 헤더 (Header) */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+    font-size: 18px; 
+    color: #000;
+    width: 100%; 
+    position: absolute; 
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20; 
+    position: relative;
+}
+
+/* 헤더 요소 전체에 좌우 패딩을 적용하여 320px 컨테이너 내부의 여백을 만듭니다. */
+
+/* 제목(h1) 스타일 */
+.header h1 {
+    font-size: 18px; 
+    font-weight: bold;
+    margin: 0; 
+    position: absolute;
+    left: 50%;
+    transform : translateX(-50%);
+    /* 제목이 뒤로가기 링크와 취소 링크 사이에 정확히 오도록 flex-grow를 사용하여 정렬합니다. */
+    flex-grow: 1; 
+    text-align: center;
+    padding: 0; /* h1 자체의 패딩 제거 */
+}
+
+/* 뒤로가기 링크 ('<') */
+.header .back-btn {
+    font-size: 16px;
+    padding-right: 0; /* 오른쪽 간섭 방지 */
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+/* 취소 링크 (오른쪽 끝으로 이동) */
+.header > a:last-child {
+    font-size: 16px;
+    color: #000;
+    text-decoration: none;
+    font-weight: normal;
+    padding-left: 0; /* 왼쪽 간섭 방지 */
+    margin-left: 0; /* 기존 margin-left: auto 제거 */
+    flex-shrink: 0;
+}
+
+/* 2. 로고 섹션 (LOGO) */
+.logo {
+    margin: 80px 0 40px; 
+}
+.join-img img {
+    max-width: 250px;
+    height: auto;
+    margin-bottom: 20px;
+}
+.logo h1 {
+    font-size: 32px;
+    font-weight: 750;
+    margin-bottom: 5px; 
+    letter-spacing: 0.5px;
+}
+.logo p {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.5;
+}
+.logo p:last-of-type {
+    margin-bottom: 50px; 
+}
+
+
+/* 3. 이용약관 동의 섹션 */
+.join-agree {
+    text-align: left;
+    margin: 0; 
+}
+.join-agree h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px; 
+}
+.join-agree h2 .fas {
+    margin-right: 8px;
+    color: #000;
+}
+
+/* 약관 리스트 테두리 색상 통일 */
+.join-agree-list {
+    border: 1px solid #000; 
+    border-radius: 8px;
+    padding: 15px 15px 10px;
+}
+
+.divider {
+    border-top: 1px solid #eee;
+    margin: 5px 0 10px;
+}
+
+
+/* 모든 동의 항목에 적용 */
+.all-agree,
+.label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 8px 0; 
+    position: relative;
+    cursor: pointer;
+}
+
+
+/* 체크박스 및 아이콘 스타일 유지 */
+.checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.check-icon {
+    font-size: 18px;
+    margin-right: 15px; 
+    color: #ccc; 
+    transition: color 0.15s;
+}
+.checkbox:checked ~ .check-icon {
+    color: #000;
+}
+
+/* 보기 버튼 */
+.view-btn {
+    background: none;
+    border: 1px solid #ccc;
+    color: #000; 
+    padding: 3px 8px;
+    font-size: 10px;
+    border-radius: 4px;
+    margin-left: auto; 
+    margin-right: -7px;
+    cursor: pointer;
+}
+
+/* 4. 다음 버튼 (Footer) */
+
+.next-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 40px; 
+    font-size: 16px; 
+    font-weight: 550; 
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.next-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.next-btn .fas {
+    margin-left: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 2. 페이지 헤더 (Header) - 좌측 정렬 스타일 적용 */
+
+.header h1 {
+    font-size: 18px; 
+    font-weight: bold;
+    margin: 0; 
+}
+.header a {
+    color: #000;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 16px;
+    z-index: 10;
+    padding: 0 10px; 
+}
+.header .back-link {
+    font-size: 16px;
+    padding-left: 0;
+}
+
+
+/* 3. 폼 입력 섹션 */
+.join-form {
+    text-align: left;
+    margin-top: 50px; 
+    padding: 0;
+}
+
+.input-group {
+    margin-bottom: 20px; 
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.input-group label .fas {
+    margin-right: 5px;
+}
+
+/*  인증번호 입력 섹션 초기 숨김  */
+#verification-code-section {
+    display: none;
+}
+
+/* 아이디, 비밀번호 입력 필드 기본 스타일 (하단 줄이 필드 너비만 적용) */
+.input-group input {
+    width: 100%;
+    padding: 15px 65px 15px 0; 
+    border: none;
+    border-bottom: 1px solid #ccc; 
+    font-size: 16px;
+    outline: none; 
+    transition: border-bottom-color 0.2s;
+}
+
+/*  아이디 입력 필드 (버튼 없음) - 오른쪽 패딩을 작게 조정 */
+#user-id {
+    padding-right: 10px; 
+}
+
+
+/*  Placeholder 텍스트 스타일 통일  */
+.input-group input::placeholder {
+    font-size: 14px; 
+    color: #ccc; /* 텍스트 색상을 약간 흐리게 유지 */
+}
+
+/* 하단줄진해지는 효과 */
+.input-group input:focus {
+    border-bottom-color: #000;
+}
+
+/* 비밀번호 표시 버튼 스타일 */
+.view-password-btn {
+    position: absolute;
+    right: 0;
+    bottom: 35px; 
+    background: none;
+    border: 1px solid #ccc;
+    color: #000;
+    padding: 3px 6px;
+    font-size: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.1s; 
+    white-space: nowrap; /* 버튼 텍스트가 줄바꿈되는 것을 방지 */
+}
+
+/* 비밀번호 표시 버튼 클릭 효과 */
+.view-password-btn:active {
+    background-color: #eee;
+}
+
+
+/* 이메일/휴대폰/인증번호 그룹 공통 스타일 (하단 줄이 버튼까지 이어지도록) */
+.email-group .id-input-wrap,
+.phone-group .phone-input-wrap,
+.verification-code-group .code-input-wrap {
+    display: flex;
+    align-items: center;
+    padding-bottom: 8px; 
+    border-bottom: 1px solid #ccc; 
+    transition: border-bottom-color 0.2s;
+}
+
+/* 포커스 시 하단 줄 진해지는 효과 (이메일, 휴대폰, 인증번호) */
+.email-group:focus-within .id-input-wrap,
+.phone-group:focus-within .phone-input-wrap,
+.verification-code-group:focus-within .code-input-wrap
+ {
+    border-bottom-color: #000;
+}
+
+
+/* 버튼/타이머 포함 그룹의 입력 필드 스타일 */
+.email-group input,
+.phone-group input,
+.verification-code-group input {
+    flex-grow: 1;
+    border-bottom: none; 
+    padding: 0; 
+    background-color: transparent; 
+    height: 30px; 
+    line-height: 30px;
+    box-shadow: none; 
+}
+
+/* 인증하기/전송하기 버튼 스타일 (작은 크기) */
+.check-id-btn,
+.send-code-btn {
+    flex-shrink: 0; 
+    background: none;
+    border: 1px solid #ccc;
+    color: #000;
+    padding: 6px 8px; 
+    font-size: 10px; 
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px; 
+    font-weight: 500;
+    transition: background-color 0.1s; 
+}
+
+/* 인증하기/전송하기 버튼 클릭 효과 */
+.verify-email-btn:active,
+.send-code-btn:active:not(:disabled) {
+    background-color: #eee;
+}
+
+/* 타이머 스타일 */
+.timer {
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #f00; 
+    margin-right: 10px; 
+    display: inline-block;
+}
+
+/* 인증번호 확인 버튼 스타일 */
+.verify-code-btn {
+    flex-shrink: 0; 
+    background: #000; 
+    border: none;
+    color: #fff;
+    padding: 6px 8px; 
+    font-size: 10px; 
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.1s; 
+}
+.verify-code-btn:disabled {
+    background-color: #ccc;
+    color: #777;
+    cursor: not-allowed;
+    opacity: 1; 
+}
+
+/* 인증번호 확인 버튼 클릭 효과 */
+.verify-code-btn:active:not(:disabled) {
+    opacity: 0.8;
+}
+
+/* 비밀번호 유효성 검사 */
+.feedback {
+    margin-top: 5px;
+    font-size: 12px;
+    min-height: 15px; 
+    text-align: left;
+    padding-left: 5px;
+}
+
+.feedback.error {
+    color: #f00; /* 빨간색 오류 메시지 */
+}
+
+.feedback.success {
+    color: #008000; /* 초록색 성공 메시지 */
+}
+
+/* 4. 하단 버튼 (Footer) - 이전 페이지와 통일 */
+.join-submit {
+    padding: 40px 0 80px; 
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 40px; 
+    font-size: 16px; 
+    font-weight: 550; 
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.1s; 
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+}
+
+/* 하단 제출 버튼 클릭 효과 */
+.submit-btn:active:not(:disabled) {
+    opacity: 0.9;
+}
+
+.submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

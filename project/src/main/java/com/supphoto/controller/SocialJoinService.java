@@ -16,21 +16,21 @@ public class SocialJoinService implements Service {
 		String name = request.getParameter("name");
 		String phone = request.getParameter("phone");
 		String social_type = request.getParameter("social_type");
-		String result ="";
 		UserVO uvo = new UserVO();
 		uvo.setUser_id(id);
 		uvo.setName(name);
 		uvo.setPhone_number(phone);
 		uvo.setSocial_type(social_type);
 		UserDAO dao = new UserDAO();
-		if(dao.checkId(id)) {
-			int row = dao.join(uvo);
+		if(dao.checkId(id)) { // 아이디 중복체크 한번 더 
+			int row = dao.socialJoin(uvo);
 			if(row > 0) {
 				System.out.println("회원가입 완료");
 				HttpSession session = request.getSession();
-				session.setAttribute("loginUser", uvo);
+				session.setAttribute("loginUser", dao.socialLogin(id));
 				return "redirect:/Gojoin_success.do";
 			}
+			
 		}
 		return "redirect:/Gofail.do";
 	}

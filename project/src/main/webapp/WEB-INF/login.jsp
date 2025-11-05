@@ -23,20 +23,22 @@
 		<form class="login-form">
 			<div class="input-group">
 				<label for="username"> <i class="fas fa-user"></i> 아이디
-				</label> <input type="text" id="username" placeholder="아이디를 입력해 주세요.">
+				</label> <input type="text" id="username" name="id" placeholder="아이디를 입력해 주세요.">
 			</div>
 
 			<div class="input-group password-group">
 				<label for="password"> <i class="fas fa-lock"></i> 비밀번호
 				</label>
 				<div class="password-input-wrapper">
-					<input type="password" id="password" placeholder="비밀번호를 입력해 주세요.">
+					<input type="password" id="password" name="pw" placeholder="비밀번호를 입력해 주세요.">
 					<button type="button" class="show-password-btn">비밀번호 표시</button>
 				</div>
+				<p id="loginErr" style="font-size:13px; color:red; display:none; margin-top:5px;">일치하는 정보가 없습니다. <br>아이디 혹은 비밀번호를 다시 확인해주세요</p>
 			</div>
 
-			<button type="submit" class="login-btn">로그인</button>
+			<button type="button" class="login-btn">로그인</button>
 		</form>
+		
 
 		<div class="link-footer">
 			<a href="">아이디 찾기</a> <span>|</span> <a href="">비밀번호 찾기</a> <span>|</span>

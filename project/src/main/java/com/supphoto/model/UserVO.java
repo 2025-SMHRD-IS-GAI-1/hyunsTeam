@@ -14,5 +14,5 @@ public class UserVO {
 	String phone_number;
 	String social_type;
 	int point;
-	int first_joint;
+	int first_join;
 }

@@ -1,0 +1,18 @@
+package com.supphoto.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserVO {
+	String user_id;
+	String password_hash;
+	String name;
+	String phone_number;
+	String social_type;
+	int point;
+	int first_joint;
+}

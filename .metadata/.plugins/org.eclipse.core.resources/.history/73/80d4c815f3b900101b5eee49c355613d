@@ -1,0 +1,45 @@
+*{
+	margin : 0;
+	padding : 0;
+}
+
+body{
+	display:flex;
+	justify-content:center; 
+	align-items: center;
+	background : #000040;
+}
+
+
+#container{
+	display:flex;
+	justify-content:center; 
+	align-items: center;
+	max-width: 480px;
+	width: 100%;
+	height: 100vh;
+	background : #fff;
+}
+
+.inner-wrap {
+	display:flex;
+	flex-direction : column;
+	justify-content:center; 
+	align-items:center;
+	padding : 0 5%;
+	max-height: 750px;
+	height: 100%;
+}
+
+
+
+.start-btn {
+	padding: 10px 20px;
+	border: 1px #b9b9b9 solid;
+	color: rgb(56, 56, 56);
+	margin-top: 30px;
+}
+
+
+
+

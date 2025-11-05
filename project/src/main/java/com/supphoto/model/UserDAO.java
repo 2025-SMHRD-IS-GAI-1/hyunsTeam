@@ -2,28 +2,33 @@ package com.supphoto.model;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mindrot.jbcrypt.BCrypt;
 
 import com.supphoto.db.MySqlSessionManager;
 
 public class UserDAO {
 	private SqlSessionFactory factory = MySqlSessionManager.getFactory();
 	
-	public UserVO login(UserVO uvo) {
+	public UserVO localLogin(UserVO uvo) {
 		SqlSession sqlSession = factory.openSession(true);
-		UserVO result = sqlSession.selectOne("login",uvo);
+		UserVO result = sqlSession.selectOne("login",uvo.getUser_id());
 		sqlSession.close();
-		return result;
+		if(BCrypt.checkpw(uvo.getPassword_hash(),result.getPassword_hash())) {
+			result.setPassword_hash("dlgkksq1d2fffsdfdbv");
+			return result;
+		}
+		return null;
 	}
 	public UserVO socialLogin(String id) {
 		SqlSession sqlSession = factory.openSession(true);
-		UserVO result = sqlSession.selectOne("socialLogin",id);
+		UserVO result = sqlSession.selectOne("login",id);
 		sqlSession.close();
 		return result;
 	}
 	public boolean checkId(String id) {
 		System.out.println("중복체크시도");
 		SqlSession sqlSession = factory.openSession(true);
-		UserVO result = sqlSession.selectOne("socialLogin",id);
+		UserVO result = sqlSession.selectOne("checkId",id);
 		sqlSession.close();
 		if(result != null) {
 			System.out.println("중복됨");
@@ -33,9 +38,17 @@ public class UserDAO {
 		}
 	}
 	
-	public int join(UserVO uvo) {
+	public int localJoin(UserVO uvo) {
 		SqlSession sqlSession = factory.openSession(true);
-		int row = sqlSession.insert("join",uvo);
+		int row = sqlSession.insert("localJoin",uvo);
+		sqlSession.close();
+		return row;
+	}
+	
+	
+	public int socialJoin(UserVO uvo) {
+		SqlSession sqlSession = factory.openSession(true);
+		int row = sqlSession.insert("socialJoin",uvo);
 		sqlSession.close();
 		return row;
 	}

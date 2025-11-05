@@ -61,7 +61,6 @@ public class NaverCallbackServcie implements Service {
                 result.append(line);
             }
             br.close();
-            System.out.println(result);
             // Gson으로 JSON 파싱
             JsonObject json = JsonParser.parseString(result.toString()).getAsJsonObject();
             if (json.get("access_token") == null) {

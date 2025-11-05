@@ -83,6 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	const checkingId = document.querySelector('.check-id');
 	const checkIdBtn = document.querySelector('.check-id-btn');
 	const idMessage = document.querySelector('.id-message');
+	
+	
+	// 아이디 중복 체크 검사
 	let checkId = false;
 		const id = document.getElementById('id');
 		function isValidId(id) {
@@ -122,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			})
 		})
     let countdown;
-    const initialTime = 300; // 5분 (300초) 설정
+    let initialTime = 300; // 5분 (300초) 설정
 
     // 비밀번호 유효성 검사 정규식: 8~20자, 문자, 숫자, 특수문자 중 3가지 이상 포함 (간단화)
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,20}$/;
@@ -210,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. 일치 여부 확인
         if (passwordValue === confirmValue) {
             // 🌟 수정: 일치하면 초록색 메시지 출력
-            passwordConfirmFeedback.textContent = '사용 가능한 비밀번호입니다.';
+            passwordConfirmFeedback.textContent = '비밀번호가 일치합니다.';
             passwordConfirmFeedback.classList.add('success');
             return true;
         } else {
@@ -249,46 +252,84 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. 인증번호 입력 시 '확인' 버튼 활성화/비활성화 (유지)
-    verificationCodeInput.addEventListener('input', () => {
-        const codeLength = verificationCodeInput.value.trim().length;
-        
-        if (codeLength >= 6 && countdown) {
-            verifyCodeBtn.disabled = false;
-            verifyCodeBtn.style.backgroundColor = '#000'; 
-            verifyCodeBtn.style.color = '#fff';
-        } else {
-            verifyCodeBtn.disabled = true;
-            verifyCodeBtn.style.backgroundColor = '#ccc'; 
-            verifyCodeBtn.style.color = '#777';
-        }
-    });
+		    // 3. '인증번호 전송' 버튼 클릭 이벤트 핸들러 (유지)
+		    sendCodeBtn.addEventListener('click', () => {
+		        const phoneNumber = phoneNumberInput.value.trim();
+				const MobileDomestic = /^01(?:0|1|[6-9])[-\s]?(?:\d{3}|\d{4})[-\s]?\d{4}$/;
+		        if (!MobileDomestic.test(phoneNumber)) {
+		            alert('정확한 휴대폰 번호를 입력해주세요.');
+		            phoneNumberInput.focus();
+		            return;
+		        }
+				fetch('SendSms.do?phone=' + phoneNumber)
+				.then(res=>res.json())
+				.then(result=>{
+					console.log(result)
+					if(result == "success"){
+						verificationSection.style.display = 'block';
+							        startTimer();
 
-
-    // 4. '인증번호 전송' 버튼 클릭 이벤트 핸들러 (유지)
-    sendCodeBtn.addEventListener('click', () => {
-        const phoneNumber = phoneNumberInput.value.trim();
-        
-        if (phoneNumber.length < 10) {
-            alert('정확한 휴대폰 번호를 입력해주세요.');
-            phoneNumberInput.focus();
-            return;
-        }
-
-        verificationSection.style.display = 'block';
-        startTimer();
-
-        verificationCodeInput.value = ''; 
-        verifyCodeBtn.disabled = true;
-        verifyCodeBtn.style.backgroundColor = '#ccc'; 
-        verifyCodeBtn.style.color = '#777';
-        
-        sendCodeBtn.disabled = true;
-        sendCodeBtn.textContent = '전송 중...'; 
-        
-        setTimeout(() => {
-            sendCodeBtn.textContent = '재전송';
-        }, 1000);
-    });
+							        verificationCodeInput.value = ''; 
+							        verifyCodeBtn.disabled = true;
+							        verifyCodeBtn.style.backgroundColor = '#ccc'; 
+							        verifyCodeBtn.style.color = '#777';
+							        
+							        sendCodeBtn.disabled = true;
+							        sendCodeBtn.textContent = '전송 중...'; 
+							        
+							        setTimeout(() => {
+										sendCodeBtn.disabled = false;
+							            sendCodeBtn.textContent = '재전송';
+							        }, 1000);
+					}else{
+						window.location.href="Gofail.do"
+					}
+				})
+		        
+		    });
+	   
+	    // 4. 인증번호 입력 시 '확인' 버튼 활성화/비활성화 (유지)
+	    verificationCodeInput.addEventListener('input', () => {
+	        const codeLength = verificationCodeInput.value.trim().length;
+	        
+	        if (codeLength >= 6 && countdown) {
+	            verifyCodeBtn.disabled = false;
+	            verifyCodeBtn.style.backgroundColor = '#000'; 
+	            verifyCodeBtn.style.color = '#fff';
+	        } else {
+	            verifyCodeBtn.disabled = true;
+	            verifyCodeBtn.style.backgroundColor = '#ccc'; 
+	            verifyCodeBtn.style.color = '#777';
+	        }
+	    });
+		
+		const joinBtn = document.querySelector('.submit-btn');
+		const verifyMessage = document.getElementById('verify-Message');
+		let isVaild = false;
+		verifyCodeBtn.addEventListener('click',()=>{
+			const phoneNumber = phoneNumberInput.value.trim();
+			fetch(`VerifySms.do?phone=${phoneNumber}&code=${verificationCodeInput.value.trim()}`)
+			.then(res=>res.json())
+			.then(result=>{
+				console.log(result,"낧아왓냐?")
+				if(result == "success"){
+					isVaild=true;
+					verifyMessage.style.color = "green";
+					verifyMessage.innerText = "인증되었습니다";
+					timerDisplay.style.display = 'none'; 
+					verifyCodeBtn.style.display = 'none';
+					phoneNumberInput.style.pointerEvents = "none";
+					sendCodeBtn.style.display = 'none'; 
+				}else{
+					verifyMessage.style.color = "red";
+					verifyMessage.innerText = "인증번호가 일치하지 않습니다. 자세히 확인해주세요.";
+				}
+				if(isVaild && checkId){
+					joinBtn.style.cursor ="pointer";
+					joinBtn.style.backgroundColor ="#000";
+					joinBtn.removeAttribute('disabled');
+				}
+			})
+		})
 
 });

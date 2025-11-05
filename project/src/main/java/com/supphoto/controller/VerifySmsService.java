@@ -25,6 +25,8 @@ public class VerifySmsService implements Service {
             result = gson.toJson("success");
             return "fetch:/" + result;
         } else {
+        	System.out.println(redisCode);
+        	System.out.println(code);
         	System.out.println("비교실패");
         	result = gson.toJson("fail");
             return "fetch:/" + result;
