@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.querySelector('.next-btn');
     const backBtn = document.querySelector('.back-btn');
     const joinWrap = document.querySelector('.join-wrap');
+	
     nextBtn.addEventListener('click',()=>{
         joinWrap.style.transform = "translateX(-50%)";
     })
@@ -79,7 +80,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordConfirmInput = document.getElementById('password-confirm');
     const passwordFeedback = document.getElementById('password-feedback');
     const passwordConfirmFeedback = document.getElementById('password-confirm-feedback');
-
+	const checkingId = document.querySelector('.check-id');
+	const checkIdBtn = document.querySelector('.check-id-btn');
+	const idMessage = document.querySelector('.id-message');
+	let checkId = false;
+		const id = document.getElementById('id');
+		function isValidId(id) {
+		    const regex = /^[a-z0-9]{6,}$/;
+		    return regex.test(id);
+		}
+		id.addEventListener('input',(e)=>{
+			checkIdBtn.style.display="block";
+			checkId = false;
+			idMessage.innerText ="";
+			if(!isValidId(e.target.value)){
+				checkIdBtn.style.opacity=0.5;
+				checkIdBtn.style.pointerEvents="none";
+				checkingId.style.display="block";
+			}else{
+				checkIdBtn.style.opacity=1;
+				checkIdBtn.style.pointerEvents="auto";
+				checkingId.style.display="none";
+			}
+		})
+		
+		checkIdBtn.addEventListener('click',()=>{
+			fetch('CheckId.do?id=' + id.value)
+			.then(res=>res.json())
+			.then(result=>{
+				console.log(result)
+				if(result == "true"){
+					checkId = true;
+					checkIdBtn.style.display="none";
+					idMessage.style.color='green';
+					idMessage.innerText ="사용 가능한 아이디입니다."
+				}else{
+					checkId = false;
+					idMessage.style.color='red';
+					idMessage.innerText ="사용중인 아이디입니다. 다른 아이디로 입력해주세요"
+				}
+			})
+		})
     let countdown;
     const initialTime = 300; // 5분 (300초) 설정
 

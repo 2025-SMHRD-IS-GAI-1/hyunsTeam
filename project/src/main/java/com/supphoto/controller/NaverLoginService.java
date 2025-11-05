@@ -19,11 +19,12 @@ public class NaverLoginService implements Service {
 		String redirectUri = null;
 		String state = UUID.randomUUID().toString();
 		try {
-			redirectUri = URLEncoder.encode("http://localhost:8088/supphoto/NaverCallback", "UTF-8");
+			redirectUri = URLEncoder.encode("http://localhost:8088/Supphoto/NaverCallback.do", "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		HttpSession session = request.getSession();
+		session.setAttribute("state", state);
 		String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code" + "&client_id=" + clientId
 				+ "&redirect_uri=" + redirectUri + "&state=" + state;
 		return "redirect:/" + apiURL;

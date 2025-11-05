@@ -1,0 +1,65 @@
+package com.supphoto.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.solapi.sdk.message.exception.SolapiMessageNotReceivedException;
+import com.solapi.sdk.message.model.Message;
+import com.solapi.sdk.message.service.DefaultMessageService;
+import com.solapi.sdk.SolapiClient;
+import com.supphoto.frontcontroller.Service;
+import com.supphoto.util.RedisUtil;
+
+import java.util.Random;
+
+public class SendSmsService implements Service {
+
+    @Override
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    	
+        String phone = request.getParameter("phone");
+        if (RedisUtil.exists(phone)) {
+            RedisUtil.del(phone);
+        }
+        String apiKey = "NCSKZARYB31XM49S";         // Solapi 콘솔에서 발급받은 API Key
+        String apiSecret = "W65DXT4EEUMQHEQRYQP8HHUNWOLDG3TD";   // Solapi 콘솔에서 발급받은 API Secret
+        String from = "01024486624"; // Solapi 콘솔에 등록된 발신번호
+        String result = "";
+        Gson gson = new Gson();
+
+        // 6자리 인증번호 생성
+        String authCode = String.format("%06d", new Random().nextInt(999999));
+
+        try {
+            // ✅ Solapi 클라이언트 초기화
+            DefaultMessageService messageService = SolapiClient.INSTANCE.createInstance(apiKey, apiSecret);
+
+            // ✅ 메시지 객체 생성
+            Message message = new Message();
+            message.setFrom(from);
+            message.setTo(phone);
+            message.setText("[서포토] 인증번호는 [" + authCode + "]입니다.");
+
+            // ✅ 메시지 전송
+            messageService.send(message);
+
+            // ✅ Redis에 인증번호 저장 (TTL 3분)
+            RedisUtil.set(phone, authCode, 180);
+
+            result = gson.toJson("success");
+
+        } catch (SolapiMessageNotReceivedException e) {
+            // 발송 실패한 메시지 확인 가능
+            System.out.println("발송 실패 메시지: " + e.getFailedMessageList());
+            e.printStackTrace();
+            result = gson.toJson("fail");
+        } catch (Exception e) {
+        	System.out.println("여기냐?" + result);
+            e.printStackTrace();
+            result = gson.toJson("fail");
+        }
+
+        return "fetch:/" + result;
+    }
+}

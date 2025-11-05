@@ -1,0 +1,33 @@
+package com.supphoto.model;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
+import com.supphoto.db.MySqlSessionManager;
+
+public class UserDAO {
+	private SqlSessionFactory factory = MySqlSessionManager.getFactory();
+	
+	public UserVO login(UserVO uvo) {
+		SqlSession sqlSession = factory.openSession(true);
+		UserVO result = sqlSession.selectOne("login",uvo);
+		sqlSession.close();
+		return result;
+	}
+	public UserVO socialLogin(String id) {
+		SqlSession sqlSession = factory.openSession(true);
+		UserVO result = sqlSession.selectOne("socialLogin",id);
+		sqlSession.close();
+		return result;
+	}
+	public boolean checkId(String id) {
+		SqlSession sqlSession = factory.openSession(true);
+		UserVO result = sqlSession.selectOne("socialLogin",id);
+		sqlSession.close();
+		if(result != null) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+}

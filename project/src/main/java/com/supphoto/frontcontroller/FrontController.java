@@ -11,14 +11,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.supphoto.controller.CheckIdService;
 import com.supphoto.controller.GoogleLoginService;
 import com.supphoto.controller.JoinService;
 import com.supphoto.controller.KakaoLoginService;
 import com.supphoto.controller.LoginService;
+import com.supphoto.controller.NaverCallbackServcie;
 import com.supphoto.controller.NaverLoginService;
+import com.supphoto.controller.SendSmsService;
 import com.supphoto.controller.SocialJoinService;
 import com.supphoto.controller.SocialLoginService;
+import com.supphoto.controller.VerifySmsService;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -33,11 +38,16 @@ public class FrontController extends HttpServlet {
 		map.put("NaverLogin.do", new NaverLoginService());
 		map.put("KakaoLogin.do", new KakaoLoginService());
 		map.put("GoogleLogin.do", new GoogleLoginService());
+		map.put("NaverCallback.do", new NaverCallbackServcie());
+		map.put("CheckId.do", new CheckIdService());
+		map.put("SendSms.do", new SendSmsService());
+		map.put("VerifySms.do", new VerifySmsService());
 	}
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uri = request.getRequestURI();
 		String path = request.getContextPath();
 		String finalURI = uri.substring(path.length() + 1);
+		System.out.println(finalURI + "프론트컨트롤러에 해당 URI로 접속함");
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		Service service = null;
@@ -52,6 +62,7 @@ public class FrontController extends HttpServlet {
 
 		if (result.contains("fetch:/")) {
 			response.setContentType("application/json; charset=UTF-8");
+			System.out.println("비동기방식으로 데이터 보냄");
 			PrintWriter out = response.getWriter();
 			out.print(result.substring(7));
 		} else if (result.contains("redirect:/")) {

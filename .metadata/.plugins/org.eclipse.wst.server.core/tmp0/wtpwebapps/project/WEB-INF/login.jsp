@@ -47,10 +47,10 @@
 			<button class="social-icon naver" onclick="location.href='NaverLogin.do'">
 				<img src="./assets/img/n-logo.png" alt="Naver Logo" class="social-img" style="border-radius:50%;">
 			</button>
-			<button class="social-icon kakao" href="KakaoLogin.do">
+			<button class="social-icon kakao" onclick="location.href='KakoLogin.do'">
 				<i class="fas fa-comment"></i>
 			</button>
-			<button class="social-icon google" href="GoogleLogin.do">
+			<button class="social-icon google" onclick="location.href='GoogleLogin.do'">
 				<img src="./assets/img/g-logo.png" alt="Google Logo" class="social-img">
 			</button>
 			<a href=""></a>

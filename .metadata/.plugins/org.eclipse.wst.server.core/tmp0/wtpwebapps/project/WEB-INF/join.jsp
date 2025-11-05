@@ -82,13 +82,15 @@
                 </div> -->
 
                 <div class="input-group email-group">
-                    <label for="email"><i class="fas fa-envelope"></i> 이메일</label>
+                    <label for="email"><i class="fas fa-envelope"></i> 아이디</label>
                     <div class="email-input-wrap">
-                        <input type="email" id="email" name="email" placeholder="이메일을 입력해 주세요." required>
-                        <button type="button" class="verify-email-btn">인증하기</button>
+                        <input type="email" id="id" name="id" placeholder="아이디를 입력해 주세요." required>
+                        <button type="button" class="check-id-btn" style="opacity:0.5;">중복확인</button>
                     </div>
+                    <p class=id-message style="font-size:12px;"></p>
+                    <p class=check-id style="font-size:12px; color:red; display:none;">영어 소문자 혹은 숫자만(총 6~20글자)가능합니다.</p>
                 </div>
-
+				
                 <div class="input-group password-main-group">
                     <label for="password"><i class="fas fa-lock"></i> 비밀번호</label>
                     <input type="password" id="password" name="pw1" placeholder="비밀번호 입력" required>
@@ -106,7 +108,7 @@
                 <div class="input-group phone-group">
                     <label for="phone-number"><i class="fas fa-mobile-alt"></i> 휴대폰 번호 인증</label>
                     <div class="phone-input-wrap">
-                        <input type="text" id="phone-number" name="phone" placeholder="휴대폰 번호 입력" required>
+                        <input type="text" id="phone-number" name="phone" placeholder="휴대폰 번호 입력(-를 빼고 입력해주세요)" required>
                         <button type="button" class="send-code-btn" id="send-code-btn">인증번호 전송</button>
                     </div>
                 </div>

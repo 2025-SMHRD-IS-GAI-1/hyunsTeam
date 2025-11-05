@@ -4,14 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data // getter, setter, 모든 필드를 초기화 시키는 생성자
-@NoArgsConstructor // 기본 생성자
-@AllArgsConstructor // 모든 필드를 초기화 시키는 생성자
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserVO {
-	String email;
+	String user_id;
 	String password_hash;
 	String name;
 	String phone_number;
+	String social_type;
 	int point;
 	int first_joint;
 }

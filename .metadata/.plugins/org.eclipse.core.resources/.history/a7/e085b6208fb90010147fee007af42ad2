@@ -1,0 +1,30 @@
+package com.supphoto.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.supphoto.frontcontroller.Service;
+import com.supphoto.util.RedisUtil;
+
+public class VerifySmsService implements Service {
+
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		String phone = request.getParameter("phone");
+        String code = request.getParameter("code");
+        String redisCode = RedisUtil.get(phone);
+        String result = "";
+        Gson gson = new Gson();
+
+        if(redisCode != null && redisCode.equals(code)) {
+            RedisUtil.del(phone); // 인증 성공 시 Redis 삭제
+            result = gson.toJson("success");
+            return "fetch:/" + result;
+        } else {
+        	result = gson.toJson("fail");
+            return "fetch:/" + result;
+        }
+	}
+
+}

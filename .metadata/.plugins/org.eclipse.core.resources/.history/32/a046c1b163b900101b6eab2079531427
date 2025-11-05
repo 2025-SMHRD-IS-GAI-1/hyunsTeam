@@ -1,0 +1,5 @@
+package com.supphoto.util;
+
+public class RedisUtil {
+
+}

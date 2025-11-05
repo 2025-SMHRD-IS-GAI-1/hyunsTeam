@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="com.supphoto.controller.LoginService"/>
+    <fullyQualifiedTypeName name="com.supphoto.controller.SocialLoginService"/>
+    <fullyQualifiedTypeName name="com.supphoto.controller.JoinService"/>
+    <fullyQualifiedTypeName name="com.supphoto.controller.SocialJoinService"/>
+    <fullyQualifiedTypeName name="javax.security.auth.message.callback.PrivateKeyCallback.Request"/>
+    <fullyQualifiedTypeName name="com.supphoto.controller.NaverLoginService"/>
+    <fullyQualifiedTypeName name="org.apache.catalina.util.URLEncoder"/>
+    <fullyQualifiedTypeName name="java.net.URLEncoder"/>
+    <fullyQualifiedTypeName name="com.google.gson.JsonObject"/>
+    <fullyQualifiedTypeName name="com.supphoto.controller.NaverCallback"/>
+    <fullyQualifiedTypeName name="com.supphoto.controller.CheckIdService"/>
+    <fullyQualifiedTypeName name="com.supphoto.controller.SendSmsService"/>
+    <fullyQualifiedTypeName name="com.google.gson.Gson"/>
+    <fullyQualifiedTypeName name="lombok.Data"/>
+    <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
+    <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
+    <fullyQualifiedTypeName name="com.supphoto.util.RedisUtil"/>
+    <fullyQualifiedTypeName name="com.supphoto.model.UserVO"/>
+    <fullyQualifiedTypeName name="com.supphoto.model.UserDAO"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+    <fullyQualifiedTypeName name="com.supphoto.controller.VerifySmsService"/>
 </qualifiedTypeNameHistroy>

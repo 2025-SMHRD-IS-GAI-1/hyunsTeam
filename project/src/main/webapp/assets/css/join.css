@@ -340,7 +340,7 @@ body {
 .verification-code-group .code-input-wrap {
     display: flex;
     align-items: center;
-    padding-bottom: 15px; 
+    padding-bottom: 8px; 
     border-bottom: 1px solid #ccc; 
     transition: border-bottom-color 0.2s;
 }
@@ -368,7 +368,7 @@ body {
 }
 
 /* 인증하기/전송하기 버튼 스타일 (작은 크기) */
-.verify-email-btn,
+.check-id-btn,
 .send-code-btn {
     flex-shrink: 0; 
     background: none;
