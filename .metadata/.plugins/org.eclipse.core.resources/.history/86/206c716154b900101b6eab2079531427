@@ -1,0 +1,26 @@
+package com.supphoto.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.supphoto.frontcontroller.Service;
+import com.supphoto.model.UserDAO;
+
+public class CheckIdService implements Service {
+
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		UserDAO dao = new UserDAO();
+		boolean check = dao.checkId(id);
+		
+		if(check) {
+			String json = new Gson().toJson("true");
+			return "fetch:/" + json;
+		}
+		String json = new Gson().toJson("false");
+		return "fetch:/" + json;
+	}
+
+}

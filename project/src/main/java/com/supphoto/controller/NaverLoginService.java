@@ -1,0 +1,33 @@
+package com.supphoto.controller;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.supphoto.frontcontroller.Service;
+
+public class NaverLoginService implements Service {
+
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		String clientId = "m_qXbaY4FH9TUgG2HrEp";
+		String redirectUri = null;
+		String state = UUID.randomUUID().toString();
+		try {
+			redirectUri = URLEncoder.encode("http://localhost:8088/Supphoto/NaverCallback.do", "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		session.setAttribute("state", state);
+		String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code" + "&client_id=" + clientId
+				+ "&redirect_uri=" + redirectUri + "&state=" + state;
+		return "redirect:/" + apiURL;
+	}
+
+}

@@ -10,6 +10,33 @@ public class UserDAO {
 	
 	public UserVO login(UserVO uvo) {
 		SqlSession sqlSession = factory.openSession(true);
-		return uvo;
+		UserVO result = sqlSession.selectOne("login",uvo);
+		sqlSession.close();
+		return result;
+	}
+	public UserVO socialLogin(String id) {
+		SqlSession sqlSession = factory.openSession(true);
+		UserVO result = sqlSession.selectOne("socialLogin",id);
+		sqlSession.close();
+		return result;
+	}
+	public boolean checkId(String id) {
+		System.out.println("중복체크시도");
+		SqlSession sqlSession = factory.openSession(true);
+		UserVO result = sqlSession.selectOne("socialLogin",id);
+		sqlSession.close();
+		if(result != null) {
+			System.out.println("중복됨");
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
+	public int join(UserVO uvo) {
+		SqlSession sqlSession = factory.openSession(true);
+		int row = sqlSession.insert("join",uvo);
+		sqlSession.close();
+		return row;
 	}
 }

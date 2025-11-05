@@ -1,0 +1,38 @@
+package com.supphoto.util;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+public class RedisUtil {
+	private static JedisPool jedisPool;
+
+    // ✅ 2. static 초기화 블록 (프로그램 시작 시 자동 실행)
+    static {
+        JedisPoolConfig config = new JedisPoolConfig();
+        config.setMaxTotal(20); // 최대 연결 수
+        config.setMaxIdle(10);  // 유휴 상태 유지할 연결 수
+        config.setMinIdle(2);   // 최소 유휴 연결 수
+
+        // Redis 서버 주소와 포트 (기본은 localhost:6379)
+        jedisPool = new JedisPool(config, "localhost", 6379);
+    }
+    private static Jedis jedis = new Jedis("localhost", 6379); // Redis 서버 주소, 포트
+
+    public static void set(String key, String value, int seconds) {
+        jedis.setex(key, seconds, value); // TTL 설정
+    }
+
+    public static String get(String key) {
+        return jedis.get(key);
+    }
+
+    public static void del(String key) {
+        jedis.del(key);
+    }
+    public static boolean exists(String key) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.exists(key);
+        }
+    }
+}

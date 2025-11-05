@@ -1,0 +1,55 @@
+package com.supphoto.frontcontroller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("*.do")
+public class FrontController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	HashMap<String, Service> map;
+	public void init(ServletConfig config) throws ServletException {
+		map = new HashMap<String, Service>();
+	}
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uri = request.getRequestURI();
+		String path = request.getContextPath();
+		String finalURI = uri.substring(path.length() + 1);
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		Service service = null;
+		String moveURL = "";
+		// 우리가 정한 패턴 -> Go파일명.do
+		if (finalURI.contains("Go")) {
+			// ex) Gomain.do
+			// main.jsp 파일로 forward 방식 이동
+			// 최종적으로 이동해야하느 경로를 만들어주는 작업
+			moveURL = finalURI = finalURI.substring(2).replaceAll("do", "jsp");
+		} else {
+			service = map.get(finalURI);
+			System.out.println(finalURI);
+			moveURL = service.execute(request, response);
+		}
+
+		if (moveURL.contains("fetch:/")) {
+			// 비동기 통신으로 요청이 들어왔을 때, 페이지를 이동하지 않겠다.
+			response.setContentType("application/json; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print(moveURL.substring(7));
+		} else if (moveURL.contains("redirect:/")) {
+			response.sendRedirect(moveURL.substring(10));
+		} else {
+			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/" + moveURL);
+			rd.forward(request, response);
+		}
+	}
+
+}

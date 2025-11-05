@@ -1,13 +1,12 @@
 # Eclipse
-.classpath
-.project
-.settings/
-.metadata/
-.recommenders/
-.factorypath
+#.classpath
+#.settings/
+#.metadata/
+#.recommenders/
+#.factorypath
 
 # Maven Build Artifacts
-target/
+# target/
 
 # Tomcat / Server / Deploy
 **/.metadata/

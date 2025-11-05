@@ -1,0 +1,65 @@
+package com.supphoto.frontcontroller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.supphoto.controller.GoogleLoginService;
+import com.supphoto.controller.JoinService;
+import com.supphoto.controller.KakaoLoginService;
+import com.supphoto.controller.LoginService;
+import com.supphoto.controller.NaverLoginService;
+import com.supphoto.controller.SocialJoinService;
+import com.supphoto.controller.SocialLoginService;
+
+@WebServlet("*.do")
+public class FrontController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	HashMap<String, Service> map;
+	public void init(ServletConfig config) throws ServletException {
+		map = new HashMap<String, Service>();
+		map.put("Login.do",new LoginService());
+		map.put("SocialLogin.do",new SocialLoginService());
+		map.put("Join.do",new JoinService());
+		map.put("SocialJoin.do",new SocialJoinService());
+		map.put("NaverLogin.do", new NaverLoginService());
+		map.put("KakaoLogin.do", new KakaoLoginService());
+		map.put("GoogleLogin.do", new GoogleLoginService());
+	}
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uri = request.getRequestURI();
+		String path = request.getContextPath();
+		String finalURI = uri.substring(path.length() + 1);
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		Service service = null;
+		String result = "";
+		// 우리가 정한 패턴 -> Go파일명.do
+		if (finalURI.contains("Go")) {
+			result = finalURI = finalURI.substring(2).replaceAll("do", "jsp");
+		} else {
+			service = map.get(finalURI);
+			result = service.execute(request, response);
+		}
+
+		if (result.contains("fetch:/")) {
+			response.setContentType("application/json; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.print(result.substring(7));
+		} else if (result.contains("redirect:/")) {
+			response.sendRedirect(result.substring(10));
+		} else {
+			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/" + result);
+			rd.forward(request, response);
+		}
+	}
+
+}

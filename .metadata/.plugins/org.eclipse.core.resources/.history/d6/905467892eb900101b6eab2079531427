@@ -1,0 +1,100 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.supphoto.frontcontroller.Service;
+import com.supphoto.model.UserDAO;
+import com.supphoto.model.UserVO;
+
+public class NaverCallbackService implements Service {
+
+    @Override
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        String code = request.getParameter("code");
+        String state = request.getParameter("state");
+
+        String clientId = "m_qXbaY4FH9TUgG2HrEp";
+        String clientSecret = "VIievahdUX";
+        String accessToken = "";
+
+        // 1. Access Token 요청
+        try {
+            String tokenUrl = "https://nid.naver.com/oauth2.0/token?"
+                    + "grant_type=authorization_code&client_id=" + clientId
+                    + "&client_secret=" + clientSecret
+                    + "&code=" + code
+                    + "&state=" + state;
+
+            URL url = new URL(tokenUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder result = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                result.append(line);
+            }
+            br.close();
+
+            // Gson으로 JSON 파싱
+            JsonObject json = JsonParser.parseString(result.toString()).getAsJsonObject();
+            accessToken = json.get("access_token").getAsString();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 2. Access Token으로 사용자 정보 가져오기
+        String userInfo = "";
+        try {
+            String apiURL = "https://openapi.naver.com/v1/nid/me";
+            URL url = new URL(apiURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder result = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                result.append(line);
+            }
+            br.close();
+
+            userInfo = result.toString();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 3. Gson으로 사용자 정보 파싱
+        JsonObject json = JsonParser.parseString(userInfo).getAsJsonObject();
+        JsonObject responseJson = json.getAsJsonObject("response");
+        String naverId = responseJson.get("id").getAsString();
+        String name = responseJson.get("name").getAsString();
+
+        // 4. DB 조회 및 회원 처리
+        UserDAO dao = new UserDAO();
+        UserVO loginUser = dao.socialLogin(naverId + "@naver.com");
+        if(loginUser != null) {
+        	HttpSession session = request.getSession();
+            session.setAttribute("loginUser", loginUser);
+        }
+        
+
+        // 5. 세션 생성
+        
+
+        // 6. JSP 이동
+        request.setAttribute("viewPage", "/WEB-INF/views/main.jsp");
+        return "/FrontController"; // Forward
+    }
+}

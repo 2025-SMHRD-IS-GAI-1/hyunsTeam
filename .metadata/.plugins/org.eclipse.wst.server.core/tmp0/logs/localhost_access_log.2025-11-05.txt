@@ -27,3 +27,8 @@
 0:0:0:0:0:0:0:1 - - [05/Nov/2025:09:50:49 +0900] "GET /Supphoto/VerifySms.do?phone=01024486624&code=686858 HTTP/1.1" 200 9
 0:0:0:0:0:0:0:1 - - [05/Nov/2025:09:50:51 +0900] "POST /Supphoto/SocialJoin.do HTTP/1.1" 302 -
 0:0:0:0:0:0:0:1 - - [05/Nov/2025:09:50:51 +0900] "GET /Supphoto/Gojoin_success.do HTTP/1.1" 200 315
+0:0:0:0:0:0:0:1 - - [05/Nov/2025:11:03:00 +0900] "GET /Supphoto/SocialJoin.do HTTP/1.1" 500 9244
+0:0:0:0:0:0:0:1 - - [05/Nov/2025:11:03:30 +0900] "GET /Supphoto/Gologin.do HTTP/1.1" 200 2148
+0:0:0:0:0:0:0:1 - - [05/Nov/2025:11:03:32 +0900] "GET /Supphoto/NaverLogin.do HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [05/Nov/2025:11:03:32 +0900] "GET /Supphoto/NaverCallback.do?code=g5fomRt65CAMTV6JP9&state=28ddf261-b35b-432b-af55-eb97d2d01fe9 HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [05/Nov/2025:11:03:32 +0900] "GET /Supphoto/Gomain.do HTTP/1.1" 500 3251

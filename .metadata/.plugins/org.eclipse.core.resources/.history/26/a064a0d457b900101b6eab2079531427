@@ -1,0 +1,291 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. 필요한 DOM 요소 가져오기
+    const allAgreeCheckbox = document.getElementById('all-agree-check');
+    const requiredCheckboxes = document.querySelectorAll('.checkbox.required');
+    const optionCheckboxes = document.querySelectorAll('.checkbox.option');
+    const allCheckboxes = document.querySelectorAll('.join-agree-list .checkbox');
+    const nextButton = document.getElementById('next-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const backBtn = document.querySelector('.back-btn');
+    const joinWrap = document.querySelector('.join-wrap');
+	
+    nextBtn.addEventListener('click',()=>{
+        joinWrap.style.transform = "translateX(-50%)";
+    })
+    backBtn.addEventListener('click',()=>{
+        joinWrap.style.transform = "translateX(0%)";
+    })
+    // 2. '모두 동의' 체크박스 이벤트 리스너
+    allAgreeCheckbox.addEventListener('change', function() {
+        const isChecked = this.checked;
+        
+        // '모두 동의'가 체크되면 모든 체크박스를 체크/해제
+        allCheckboxes.forEach(checkbox => {
+            checkbox.checked = isChecked;
+        });
+        
+        // 상태가 변경될 때마다 다음 버튼 상태 업데이트
+        checkNextButtonStatus();
+    });
+
+    // 3. 개별 체크박스 이벤트 리스너 (필수, 선택 모두)
+    allCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            
+            // 필수 약관이 모두 체크되었는지 확인
+            checkNextButtonStatus();
+            
+            // 모든 체크박스의 상태를 확인하여 '모두 동의' 상태 업데이트
+            let allChecked = true;
+            allCheckboxes.forEach(cb => {
+                if (!cb.checked) {
+                    allChecked = false;
+                }
+            });
+            allAgreeCheckbox.checked = allChecked;
+        });
+    });
+
+    // 4. '다음' 버튼 활성화 상태 확인 함수
+    function checkNextButtonStatus() {
+        let requiredAllChecked = true;
+        
+        // 필수 약관만 검사
+        requiredCheckboxes.forEach(checkbox => {
+            if (!checkbox.checked) {
+                requiredAllChecked = false;
+            }
+        });
+
+        // 필수 약관이 모두 체크되었으면 '다음' 버튼 활성화
+        if (requiredAllChecked) {
+            nextButton.disabled = false;
+            nextButton.style.backgroundColor = '#000';
+        } else {
+            nextButton.disabled = true;
+            nextButton.style.backgroundColor = '#ccc'; // 비활성화 색상 (CSS와 통일)
+        }
+    }
+    
+    const verificationSection = document.getElementById('verification-code-section');
+    const sendCodeBtn = document.getElementById('send-code-btn');
+    const timerDisplay = document.getElementById('timer-display');
+    const phoneNumberInput = document.getElementById('phone-number');
+    const verificationCodeInput = document.getElementById('verification-code');
+    const verifyCodeBtn = document.querySelector('.verify-code-btn');
+    const viewPasswordBtns = document.querySelectorAll('.view-password-btn');
+
+    // 비밀번호 관련 DOM 요소
+    const passwordInput = document.getElementById('password');
+    const passwordConfirmInput = document.getElementById('password-confirm');
+    const passwordFeedback = document.getElementById('password-feedback');
+    const passwordConfirmFeedback = document.getElementById('password-confirm-feedback');
+	const checkIdBtn = document.querySelector('.check-id-btn');
+	const idMessage = document.querySelector('.id-message');
+	let checkId = false;
+		const id = document.getElementById('id');
+		function isValidId(id) {
+		    const regex = /^[a-z0-9]{6,}$/;
+		    return regex.test(id);
+		}
+		id.addEventListener('input',(e)=>{
+			checkIdBtn.style.display="block";
+			checkId = false;
+			idMessage.innerText ="";
+			if(!isValidId(e.target.value)){
+				checkIdBtn.style.opacity=0.7;
+				checkIdBtn.style.pointerEventes="none";
+			}else{
+				checkIdBtn.style.opacity=1;
+				checkIdBtn.style.pointerEventes="auto";
+			}
+		})
+		
+		checkIdBtn.addEventListener('click',()=>{
+			fetch('CheckId.do?id=' + id.value)
+			.then(res=>res.json())
+			.then(result=>{
+				console.log(result)
+				if(result == "true"){
+					checkId = true;
+					checkIdBtn.style.display="none";
+					idMessage.style.color='green';
+					idMessage.innerText ="사용 가능한 아이디입니다."
+				}else{
+					checkId = false;
+					idMessage.style.color='red';
+					idMessage.innerText ="사용중인 아이디입니다. 다른 아이디로 입력해주세요"
+				}
+			})
+		})
+    let countdown;
+    const initialTime = 300; // 5분 (300초) 설정
+
+    // 비밀번호 유효성 검사 정규식: 8~20자, 문자, 숫자, 특수문자 중 3가지 이상 포함 (간단화)
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,20}$/;
+
+    // 초(Seconds)를 "MM:SS" 형식으로 변환하는 함수
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    }
+
+    // 타이머 시작 및 카운트다운 로직 (생략)
+    function startTimer() {
+        let timeLeft = initialTime;
+        timerDisplay.textContent = formatTime(timeLeft);
+        timerDisplay.style.color = '#f00'; 
+
+        clearInterval(countdown); 
+
+        countdown = setInterval(() => {
+            timeLeft--;
+            timerDisplay.textContent = formatTime(timeLeft);
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerDisplay.textContent = '00:00';
+                timerDisplay.style.color = '#777'; 
+                
+                verificationCodeInput.value = '';
+                verifyCodeBtn.disabled = true;
+                verifyCodeBtn.style.backgroundColor = '#ccc';
+                verifyCodeBtn.style.color = '#777';
+
+                sendCodeBtn.textContent = '재전송'; 
+                sendCodeBtn.disabled = false;
+                
+                alert('인증 시간이 만료되었습니다. 다시 전송해주세요.');
+            }
+        }, 1000); 
+    }
+    
+    // 🌟 비밀번호 유효성 검사 함수 (첫 번째 필드) 🌟
+    function validatePassword() {
+        const passwordValue = passwordInput.value.trim();
+        passwordFeedback.textContent = '';
+        passwordFeedback.className = 'feedback';
+        
+        if (passwordValue.length === 0) {
+            return false;
+        }
+
+        if (passwordRegex.test(passwordValue)) {
+            // 🌟 수정: 형식이 맞으면 초록색 메시지 출력
+            passwordFeedback.textContent = '사용 가능한 비밀번호입니다.';
+            passwordFeedback.classList.add('success');
+            return true;
+        } else {
+            // 🌟 수정: 형식이 틀렸을 때 빨간색 메시지 출력
+            passwordFeedback.textContent = '숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!';
+            passwordFeedback.classList.add('error');
+            return false;
+        }
+    }
+
+   
+
+    // 🌟 비밀번호 확인 검사 함수 (두 번째 필드) 🌟
+    function validatePasswordConfirm() {
+        const passwordValue = passwordInput.value.trim();
+        const confirmValue = passwordConfirmInput.value.trim();
+        passwordConfirmFeedback.textContent = '';
+        passwordConfirmFeedback.className = 'feedback';
+
+        if (confirmValue.length === 0) {
+            return false;
+        }
+        
+        // 1. 비밀번호 형식이 올바른지 확인 (이 부분은 첫 번째 필드의 유효성 검사에 의존)
+        if (!validatePassword()) {
+            passwordConfirmFeedback.textContent = '비밀번호를 먼저 올바르게 입력해주세요.'; // (유지)
+            passwordConfirmFeedback.classList.add('error');
+            return false;
+        }
+
+        // 2. 일치 여부 확인
+        if (passwordValue === confirmValue) {
+            // 🌟 수정: 일치하면 초록색 메시지 출력
+            passwordConfirmFeedback.textContent = '사용 가능한 비밀번호입니다.';
+            passwordConfirmFeedback.classList.add('success');
+            return true;
+        } else {
+            // 🌟 수정: 불일치하면 빨간색 메시지 출력
+            passwordConfirmFeedback.textContent = '비밀번호가 일치하지 않습니다.';
+            passwordConfirmFeedback.classList.add('error');
+            return false;
+        }
+    }
+
+    // 비밀번호 실시간 검사 리스너
+    passwordInput.addEventListener('input', () => {
+        console.log(11)
+        validatePassword();
+        if (passwordConfirmInput.value.length > 0) {
+             validatePasswordConfirm();
+        }
+    });
+    
+    passwordConfirmInput.addEventListener('input', validatePasswordConfirm);
+
+
+    // 🌟 2. 비밀번호 표시/숨기기 토글 기능 (유지) 🌟
+    viewPasswordBtns.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.getAttribute('data-target');
+            const targetInput = document.getElementById(targetId);
+
+            if (targetInput.type === 'password') {
+                targetInput.type = 'text';
+                button.textContent = '비밀번호 숨기기';
+            } else {
+                targetInput.type = 'password';
+                button.textContent = '비밀번호 표시';
+            }
+        });
+    });
+
+    // 3. 인증번호 입력 시 '확인' 버튼 활성화/비활성화 (유지)
+    verificationCodeInput.addEventListener('input', () => {
+        const codeLength = verificationCodeInput.value.trim().length;
+        
+        if (codeLength >= 6 && countdown) {
+            verifyCodeBtn.disabled = false;
+            verifyCodeBtn.style.backgroundColor = '#000'; 
+            verifyCodeBtn.style.color = '#fff';
+        } else {
+            verifyCodeBtn.disabled = true;
+            verifyCodeBtn.style.backgroundColor = '#ccc'; 
+            verifyCodeBtn.style.color = '#777';
+        }
+    });
+
+
+    // 4. '인증번호 전송' 버튼 클릭 이벤트 핸들러 (유지)
+    sendCodeBtn.addEventListener('click', () => {
+        const phoneNumber = phoneNumberInput.value.trim();
+        
+        if (phoneNumber.length < 10) {
+            alert('정확한 휴대폰 번호를 입력해주세요.');
+            phoneNumberInput.focus();
+            return;
+        }
+
+        verificationSection.style.display = 'block';
+        startTimer();
+
+        verificationCodeInput.value = ''; 
+        verifyCodeBtn.disabled = true;
+        verifyCodeBtn.style.backgroundColor = '#ccc'; 
+        verifyCodeBtn.style.color = '#777';
+        
+        sendCodeBtn.disabled = true;
+        sendCodeBtn.textContent = '전송 중...'; 
+        
+        setTimeout(() => {
+            sendCodeBtn.textContent = '재전송';
+        }, 1000);
+    });
+
+});
