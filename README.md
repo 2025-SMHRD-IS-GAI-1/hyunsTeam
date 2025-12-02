@@ -102,21 +102,26 @@ AI를 활용해 사용자가 요청한 예) 옷(정장, 셔츠 등), 인물, 배
   <tr>
     <th style="border-top:none">팀장</th>
     <td>최현선</td>
+    <td>풀스택 및 전체 서비스 성능 개선</td>
   </tr>
   <tr>
   <th>팀원</th>
   <td>임도형</td>
+  <td>PPT 제작</td>
   <tr>
   <th>팀원</th>
   <td>유도경</td>
+  <td>AI 모델서치, AI 모델링 및 백엔드</td>
   </tr>
   <tr>
   <th>팀원</th>
   <td>김태경</td>
+  <td>DB 구축, 백엔드, 문서작업</td>
   </tr>
   <tr>
   <th>팀원</th>
   <td>조성은</td>
+  <td>프론트엔드 및 문서작업</td>
   </tr>
 </table>
 
