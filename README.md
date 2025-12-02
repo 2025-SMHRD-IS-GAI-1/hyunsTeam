@@ -95,14 +95,6 @@ AI를 활용해 사용자가 요청한 예) 옷(정장, 셔츠 등), 인물, 배
 <img width="185" height="410" alt="Picture (7)" src="https://github.com/user-attachments/assets/3a81e167-6587-4fe2-82b3-888cc3f90f33" />
 <img width="205" height="453" alt="Picture (8)" src="https://github.com/user-attachments/assets/694a3248-2a2d-4842-a5c2-740607bc30d7" />
 <img width="196" height="430" alt="Picture (9)" src="https://github.com/user-attachments/assets/d8dcb2d1-4fe3-4807-9692-2e850a89c3d3" />
-<img width="195" height="445" alt="Picture (10)" src="https://github.com/user-attachments/assets/f711f613-a413-49eb-b80c-e9983b378c21" />
-<img width="204" height="445" alt="Picture (11)" src="https://github.com/user-attachments/assets/5b57b2e9-0e4b-47dc-b935-6295948c6e4e" />
-<img width="209" height="458" alt="Picture (12)" src="https://github.com/user-attachments/assets/d713fb9d-c29d-40f2-ad06-88d2ebc54690" />
-<img width="693" height="342" alt="Picture (13)" src="https://github.com/user-attachments/assets/898a3316-fe71-4b41-9aba-a72c18d71f64" />
-<img width="151" height="332" alt="Picture (14)" src="https://github.com/user-attachments/assets/2c869465-de3c-4854-b4dc-b7b0c122a229" />
-<img width="151" height="332" alt="Picture (15)" src="https://github.com/user-attachments/assets/73477e92-b02b-4ee6-b9f2-caa6ca73d6b6" />
-<img width="152" height="332" alt="Picture (16)" src="https://github.com/user-attachments/assets/481be3e6-e723-43d2-94d0-94199351ba2d" />
-<img width="155" height="342" alt="Picture (17)" src="https://github.com/user-attachments/assets/280221ed-d124-4852-9203-22a0b4f6d808" />
 
 
 ## 11. 팀원 역할
@@ -129,3 +121,9 @@ AI를 활용해 사용자가 요청한 예) 옷(정장, 셔츠 등), 인물, 배
 </table>
 
 ## 12. 트러블슈팅
+
+### 이미지 내의 사람이 차지하는 범위에 따라서 결과품질 저하 현상
+- 이미지 확대, 축소 및 크롭기능을 넣어 사용자가 가이드라인에 맞게 이미지를 편집하고 해당 이미지를 AI가 인식 가능한 형태로 전처리 작업진행
+
+### 안경을 착용한 경우 결과물이 복불복으로 출력되는 현상
+- 딥페이스 라이브러리의 아크페이스라는 얼굴인식이 강력한 모델을 활용
